@@ -1,0 +1,30 @@
+.enlace-principal {
+  color: #80004C;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  
+  &:active:not(:disabled) {
+    color: #80004C;
+  }
+
+  &:hover:not(:disabled) { 
+    color: #80004C;
+    text-decoration: none;
+  }
+
+  &:focus:not(:disabled) {
+    outline: 2px solid #409AA1;
+    outline-offset: 2px;
+    text-decoration: none;
+  }
+
+  &:visited:not(:disabled) {
+     color: #582E73;
+  }
+
+  &:disabled {
+    color: #575453;
+    text-decoration: underline;
+  }
+}

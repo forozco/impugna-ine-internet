@@ -1,0 +1,40 @@
+.textarea-primario {
+  display: block;
+  width: 100%;
+  padding: 12px 8px;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #575453;
+  background-color: #FFFFFF;
+  border: 1px solid #c0c0c0;
+  border-radius: 8px;
+  resize: none;
+  
+  &::placeholder {
+    color: #575453;
+  }
+
+  &:active:not(:disabled) { 
+    border: 1px solid #D5007F !important;
+  }
+
+  
+  &:hover:not(:disabled) { 
+    border: 1px solid #333333;
+  }
+
+  
+  &:focus:not(:disabled) {
+     outline: 2px solid #409AA1;
+  }
+  
+  &:disabled {
+    background-color: #EBEBEB;
+     border: 1px solid #EBEBEB;
+    color: #575453;
+  }
+
+  &.error {
+    border: 1px solid #AA1700;  
+  }
+}

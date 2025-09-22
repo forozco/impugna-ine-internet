@@ -1,0 +1,25 @@
+.footer {
+  background-color: #351C45; 
+  color: #FFFFFF;
+  padding: 12px 24px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+
+  img {
+    height: 18px;
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    text-align: center;
+
+    .text-end {
+      text-align: center !important;
+      margin-top: 0.5rem;
+    }
+  }
+}

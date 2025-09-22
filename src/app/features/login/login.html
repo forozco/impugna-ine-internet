@@ -1,0 +1,55 @@
+<div class="login-container" role="main" aria-label="Formulario de inicio de sesión">
+  <section class="login-box" aria-labelledby="login-instructions">
+    <form (ngSubmit)="login()" #loginForm="ngForm" aria-describedby="login-instructions">
+      <h6 id="login-instructions" class="text-center space-24 space-top-2 ">Ingresa tu Cuenta Única de Acceso</h6>
+      <p class="font-12-regular space-16 space-top-2 ">Dato obligatorio<span class="requerido">*</span></p>
+      <label for="username" class="parrafo-regular space-12 space-top-2 ">
+        <i class="fa-regular fa-user"></i>
+        Usuario<span class="requerido">*</span>
+      </label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
+          [class]="'form-control' + (usernameField.invalid && usernameField.touched ? ' error' : '')"
+          required
+          aria-required="true"
+          #usernameField="ngModel"
+          placeholder="Usuario"
+        />
+      <p id="username-help" class="font-12-regular space-16 space-top-2 ">Ingresa con tu usuario INE</p>
+        <div class="password-header space-8 space-top-2 ">
+          <label for="password" class="parrafo-regular">
+            <i class="fas fa-lock"></i>
+            Contraseña<span class="requerido">*</span>
+          </label>
+          <enlace-principal href="/recuperar-password">Olvidé mi contraseña</enlace-principal>
+        </div>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          [class]="'form-control' + (passwordField.invalid && passwordField.touched ? ' error' : '')"
+          required
+          aria-required="true"
+          aria-describedby="password-help"
+          #passwordField="ngModel"
+          placeholder="Contraseña"
+        />
+      <p id="password-help" class="font-12-regular">Campo de contraseña</p>
+      <div class="text-center">
+        <btn-primario class="space-16 space-24-top w-100" type="submit" [disabled]="loginForm.invalid ?? false" ariaLabel="Iniciar sesión">
+        Iniciar sesión
+        </btn-primario>
+        <br>
+      </div>
+       <enlace-principal href="/registro" aria-label="Crear nueva cuenta de usuario">¿Quieres crear tu cuenta?</enlace-principal>
+    </form>
+  </section>
+    <div class="text-center space-24-top">
+      <img src="./assets/imgs/logos/logo-INE.png" alt="Logotipo del Instituto Nacional Electoral" height="40">
+    </div>
+</div>
+
