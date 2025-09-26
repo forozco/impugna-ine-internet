@@ -1,0 +1,55 @@
+<div class="tdi">
+  <div class="tdi__label">{{ label }}</div>
+
+  <div class="tdi__box" [class.tdi--disabled]="disabled">
+    <!-- Días -->
+    <div class="tdi__cell">
+      <input
+        data-field="days"
+        class="tdi__num tdi__num--days"
+        [disabled]="disabled"
+        inputmode="numeric"
+        maxlength="3"
+        [value]="pad3(parts.days)"
+        (focus)="$any($event.target).select()"
+        (blur)="onBlur()"
+        (input)="changeDays($any($event.target).value)"
+      />
+      <div class="tdi__caption">Días</div>
+    </div>
+
+    <div class="tdi__sep">|</div>
+
+    <!-- Horas -->
+    <div class="tdi__cell">
+      <div class="tdi__hmm">
+        <input
+          data-field="hours"
+          class="tdi__num"
+          [disabled]="disabled"
+          inputmode="numeric"
+          maxlength="2"
+          [value]="pad2(parts.hours)"
+          (focus)="$any($event.target).select()"
+          (blur)="onBlur()"
+          (input)="changeHours(($any($event.target)).value)"
+        />
+        <span class="tdi__colon">:</span>
+        <input
+          data-field="minutes"
+          class="tdi__num"
+          [disabled]="disabled"
+          inputmode="numeric"
+          maxlength="2"
+          [value]="pad2(parts.minutes)"
+          (focus)="$any($event.target).select()"
+          (blur)="onBlur()"
+          (input)="changeMinutes(($any($event.target)).value)"
+        />
+      </div>
+      <div class="tdi__caption">
+        Horas&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minutos
+      </div>
+    </div>
+  </div>
+</div>
