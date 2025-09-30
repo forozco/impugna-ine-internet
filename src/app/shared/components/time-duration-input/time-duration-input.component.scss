@@ -1,0 +1,86 @@
+:host {
+  display: block;
+}
+
+.tdi {
+  --tdi-border: #5e2a8a;   /* morado */
+  --tdi-shadow: 0 2px 10px rgba(0,0,0,.08);
+  --tdi-bg: #fff;
+  --tdi-text: #111;
+  --tdi-muted: #6b7280;
+
+  color: var(--tdi-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.tdi__label {
+  text-align: center;
+  font-size: .9rem;
+  color: var(--tdi-muted);
+  margin-bottom: .5rem;
+}
+
+.tdi__box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  background: var(--tdi-bg);
+  border: 3px solid var(--tdi-border);
+  border-radius: 12px;
+  box-shadow: var(--tdi-shadow);
+  min-width: 280px;
+}
+
+.tdi--disabled {
+  opacity: .6;
+  pointer-events: none;
+}
+
+.tdi__cell {
+  display: grid;
+  justify-items: center;
+}
+
+.tdi__sep {
+  color: var(--tdi-border);
+  font-weight: 700;
+  user-select: none;
+}
+
+.tdi__hmm {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+.tdi__colon {
+  font-weight: 700;
+  user-select: none;
+}
+
+.tdi__num {
+  width: 2.5ch;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  border: 0;
+  outline: none;
+  background: transparent;
+  padding: 0 .1rem;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(94,42,138,.18);
+    border-radius: 6px;
+  }
+}
+
+.tdi__num--days { width: 3.6ch; }
+
+.tdi__caption {
+  margin-top: .25rem;
+  font-size: .72rem;
+  color: var(--tdi-muted);
+  letter-spacing: .2px;
+}

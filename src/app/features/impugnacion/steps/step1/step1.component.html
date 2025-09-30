@@ -1,0 +1,36 @@
+<form [formGroup]="form" class="step-card">
+  <div class="mb-3">
+    <label class="form-label">
+      Selecciona a la persona que va a registrar la impugnación<span class="text-danger">*</span>
+    </label>
+
+    <div class="list-group shadow-sm">
+      <label class="list-group-item d-flex align-items-center gap-2">
+        <input type="radio" class="form-check-input m-0" formControlName="registrantType" value="titular" />
+        <div>Titular (Agravado)</div>
+      </label>
+
+      <label class="list-group-item d-flex align-items-center gap-2">
+        <input type="radio" class="form-check-input m-0" formControlName="registrantType" value="representantes" />
+        <div>Representante(s)</div>
+      </label>
+    </div>
+
+    <div class="invalid-feedback d-block"
+         *ngIf="form.get('registrantType')?.touched && form.get('registrantType')?.invalid">
+      Selecciona una opción.
+    </div>
+  </div>
+
+  <!-- Representantes dinámicos -->
+  <ng-container *ngIf="form.value.registrantType === 'representantes'">
+    <label class="form-label fw-semibold">Representantes</label>
+    <div class="d-flex flex-column gap-2 mb-2">
+      <div class="input-group" *ngFor="let ctrl of reps.controls; index as i">
+        <input class="form-control" [formControl]="ctrl" placeholder="Representante {{ i + 1 }}" />
+        <button class="btn btn-outline-secondary" type="button" (click)="removeRep(i)" [disabled]="reps.length<=1">&minus;</button>
+      </div>
+      <button class="btn btn-outline-primary align-self-start" type="button" (click)="addRep()">+</button>
+    </div>
+  </ng-container>
+</form>

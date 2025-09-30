@@ -1,0 +1,38 @@
+<section class="container py-3">
+  <div class="container my-3">
+    <h5 class="fw-bold mb-1">Registro de una Impugnación</h5>
+
+    <small class="text-muted d-block mb-2">
+      Los datos con (<span class="fw-bold">*</span>) son requeridos
+    </small>
+
+    <p class="mb-0">Llena el siguiente formulario para registrar una Impugnación.</p>
+  </div>
+  <!-- Stepper visual ya existente -->
+  <app-stepper [steps]="steps" [currentIndex]="currentIndex"></app-stepper>
+
+  <!-- Render de hijos por paso -->
+  <ng-container [ngSwitch]="currentIndex">
+    <!-- PASO 0 (nuevo) -->
+    <app-impugnacion-step0
+      *ngSwitchCase="0"
+      #step0Ref
+      [initial]="data.step0"
+    ></app-impugnacion-step0>
+
+    <!-- Paso 1 -->
+    <app-impugnacion-step1 *ngSwitchCase="1" #step1Ref [initial]="data.step1">
+    </app-impugnacion-step1>
+
+    <!-- Lugares reservados para futuros hijos -->
+    <div *ngSwitchCase="2" class="alert alert-secondary">Paso 3 (pendiente)</div>
+    <div *ngSwitchCase="3" class="alert alert-secondary">Paso 4 (pendiente)</div>
+  </ng-container>
+
+  <div class="mt-4 d-flex gap-2">
+    <button class="btn btn-outline-secondary" (click)="prev()">Retroceder</button>
+    <button class="btn btn-primary" (click)="next()">
+      {{ currentIndex === steps.length - 1 ? 'Enviar' : 'Continuar' }}
+    </button>
+  </div>
+</section>
