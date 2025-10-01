@@ -8,12 +8,18 @@
 
     <p class="mb-0">Llena el siguiente formulario para registrar una Impugnación.</p>
   </div>
-  <!-- Stepper visual ya existente -->
-  <app-stepper [steps]="steps" [currentIndex]="currentIndex"></app-stepper>
 
-  <!-- Título del paso actual con estilo de la imagen -->
-  <div class="position-relative my-4">
-    <div class="step-title-container bg-primary text-white p-3 rounded-3 position-relative">
+  <!-- Stepper visual -->
+  <div class="my-4">
+    <app-stepper [steps]="steps" [currentIndex]="currentIndex"></app-stepper>
+  </div>
+
+  <!-- Título del paso actual con flecha hacia arriba -->
+  <div class="stepper-container position-relative my-4">
+    <!-- Flecha posicionada dinámicamente arriba de la caja del título -->
+    <div class="arrow-up" [style.left.%]="getArrowPosition()"></div>
+
+    <div class="step-title-container bg-primary text-white p-3 rounded-3">
       <div class="d-flex align-items-center justify-content-between">
         <div class="step-badge bg-white text-dark px-3 py-1 rounded fw-medium">
           {{ steps[currentIndex].label }} de {{ steps.length }}
@@ -23,8 +29,6 @@
         </h4>
         <div style="width: 120px;"></div> <!-- Espaciador para centrar el título -->
       </div>
-      <!-- Flecha hacia abajo -->
-      <div class="arrow-down"></div>
     </div>
   </div>
 

@@ -10,7 +10,7 @@
 
 /* Rail */
 .rail {
-  position: absolute; left: 40px; right: 40px; top: 42px;
+  position: absolute; left: 40px; right: 40px; top: 44px;
   height: 6px; border-radius: 999px; background: var(--step-muted);
   &.rail--progress {
     background: var(--step-purple);

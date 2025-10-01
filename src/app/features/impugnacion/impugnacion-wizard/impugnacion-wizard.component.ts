@@ -72,4 +72,18 @@ export class ImpugnacionWizardComponent {
     console.log('Payload final de impugnación:', this.data);
     // TODO: Llama API / router, etc.
   }
+
+  /** Calcula la posición de la flecha basada en el paso actual */
+  getArrowPosition(): number {
+    const totalSteps = this.steps.length;
+    if (totalSteps === 0) return 50; // Fallback al centro
+
+    // El stepper tiene padding de 40px a cada lado (según el CSS del stepper)
+    // Calculamos la posición considerando que los pasos están distribuidos uniformemente
+    const stepWidth = 100 / totalSteps;
+    const stepCenter = stepWidth / 2;
+    const position = (this.currentIndex * stepWidth) + stepCenter;
+
+    return position;
+  }
 }
