@@ -10,12 +10,12 @@
   </div>
 
   <!-- Stepper visual -->
-  <div class="my-4">
+  <div class="stepper-section">
     <app-stepper [steps]="steps" [currentIndex]="currentIndex"></app-stepper>
   </div>
 
   <!-- Título del paso actual con flecha hacia arriba -->
-  <div class="stepper-container position-relative my-4">
+  <div class="stepper-container position-relative">
     <!-- Flecha posicionada dinámicamente arriba de la caja del título -->
     <div class="arrow-up" [style.left.%]="getArrowPosition()"></div>
 
@@ -24,9 +24,9 @@
         <div class="step-badge bg-white text-dark px-3 py-1 rounded fw-medium">
           {{ steps[currentIndex].label }} de {{ steps.length }}
         </div>
-        <h4 class="mb-0 text-white fw-bold flex-grow-1 text-center">
+        <h6 class="step-title mb-0 text-white fw-bold flex-grow-1 text-center">
           {{ steps[currentIndex].description }}
-        </h4>
+        </h6>
         <div style="width: 120px;"></div> <!-- Espaciador para centrar el título -->
       </div>
     </div>
