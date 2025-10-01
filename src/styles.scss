@@ -1,3 +1,6 @@
 @use "assets/estilos/tipografia";
 @use "assets/estilos/colores";
 @use "assets/estilos/espaciado";
+
+@use "variables" as *;
+@use "mixins" as *;
