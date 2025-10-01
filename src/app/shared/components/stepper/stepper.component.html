@@ -16,6 +16,7 @@
       *ngFor="let s of steps; let i = index"
       [class.step--done]="isDone(i)"
       [class.step--current]="isCurrent(i)"
+      [class.step--disabled]="isDisabled(i)"
       [attr.aria-current]="isCurrent(i) ? 'step' : null"
     >
       <!-- Punto con tooltip Bootstrap -->

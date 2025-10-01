@@ -11,6 +11,23 @@
   <!-- Stepper visual ya existente -->
   <app-stepper [steps]="steps" [currentIndex]="currentIndex"></app-stepper>
 
+  <!-- Título del paso actual con estilo de la imagen -->
+  <div class="position-relative my-4">
+    <div class="step-title-container bg-primary text-white p-3 rounded-3 position-relative">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="step-badge bg-white text-dark px-3 py-1 rounded fw-medium">
+          {{ steps[currentIndex].label }} de {{ steps.length }}
+        </div>
+        <h4 class="mb-0 text-white fw-bold flex-grow-1 text-center">
+          {{ steps[currentIndex].description }}
+        </h4>
+        <div style="width: 120px;"></div> <!-- Espaciador para centrar el título -->
+      </div>
+      <!-- Flecha hacia abajo -->
+      <div class="arrow-down"></div>
+    </div>
+  </div>
+
   <!-- Render de hijos por paso -->
   <ng-container [ngSwitch]="currentIndex">
     <!-- PASO 0 (nuevo) -->

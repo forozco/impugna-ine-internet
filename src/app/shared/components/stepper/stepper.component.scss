@@ -1,8 +1,9 @@
 :host {
-  --step-purple: #5e2a8a;
-  --step-cyan:   #5ee0ff;
-  --step-done:   #6236a3;
+  --step-purple: #582E73;
+  --step-done:   #582E73;
+  --step-current: #582E73;
   --step-muted:  #e2e2e7;
+  --step-disabled: #d6d6d6;
 }
 
 .stepper { padding: 28px 10px 46px; }
@@ -12,7 +13,7 @@
   position: absolute; left: 40px; right: 40px; top: 42px;
   height: 6px; border-radius: 999px; background: var(--step-muted);
   &.rail--progress {
-    background: linear-gradient(90deg, var(--step-purple), var(--step-cyan));
+    background: var(--step-purple);
     width: 0%; z-index: 1;
   }
 }
@@ -37,12 +38,27 @@
 .step.step--done .dot {
   border-color: var(--step-done); background: var(--step-done);
   .inner { background: transparent; } .check { opacity: 1; }
-  box-shadow: 0 0 0 3px rgba(98,54,163,.15);
+  box-shadow: none;
 }
 .step.step--current .dot {
-  border-color: var(--step-cyan);
-  box-shadow: 0 0 0 4px rgba(94,224,255,.35);
-  .inner { background: var(--step-purple); }
+  border-color: var(--step-current);
+  background: var(--step-current);
+  box-shadow: 0 0 0 8px rgba(88, 46, 115, 0.2);
+  border-width: 3px;
+  .inner {
+    background: #fff;
+    width: 12px;
+    height: 12px;
+  }
+  .check { opacity: 0; }
+}
+.step.step--disabled .dot {
+  border-color: var(--step-disabled);
+  background: #fff;
+  .inner { background: var(--step-disabled); }
+}
+.step.step--disabled .caption {
+  color: var(--step-disabled);
 }
 
 /* Responsivo */

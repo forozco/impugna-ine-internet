@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StepperComponent, StepItem } from '../../../shared/components/stepper/stepper.component';
 import { ImpugnacionData } from '../../../shared/models/impugnacion.models';
-import { Step0Component } from '../steps/step0/step0.component'; 
+import { Step0Component } from '../steps/step0/step0.component';
 import { Step1Component } from '../steps/step1/step1.component';
 
 @Component({
@@ -10,22 +10,27 @@ import { Step1Component } from '../steps/step1/step1.component';
   standalone: true,
   imports: [CommonModule, StepperComponent, Step0Component, Step1Component],
   templateUrl: './impugnacion-wizard.component.html',
+  styleUrl: './impugnacion-wizard.component.scss'
 })
 export class ImpugnacionWizardComponent {
   steps: StepItem[] = [
-    { label: 'Paso 1', description: 'Inicia la impugnación' },
-    { label: 'Paso 2', description: '¿Quién registra la impugnación?' }, // <- primer hijo implementado
-    { label: 'Paso 3', description: 'Adjunta evidencia' },
-    { label: 'Paso 4', description: 'Revisión y envío' },
+    { label: 'Paso 1', description: 'Información general' },
+    { label: 'Paso 2', description: 'Datos del impugnante' },
+    { label: 'Paso 3', description: 'Datos del representante' },
+    { label: 'Paso 4', description: 'Datos de la impugnación' },
+    { label: 'Paso 5', description: 'Acreditación de la personalidad' },
+    { label: 'Paso 6', description: 'Documentos adicionales' },
+    { label: 'Paso 7', description: 'Revisión' },
+    { label: 'Paso 8', description: 'Confirmación' },
   ];
 
-  /** Control total del índice (arranca en 1 para coincidir con la UI mostrada) */
-  currentIndex = 0;
+  /** Control total del índice (configurado en paso 5 = índice 4) */
+  currentIndex = 4;
 
   /** Estado global de todos los pasos */
   data: ImpugnacionData = {};
 
-  @ViewChild('step0Ref') step0Ref?: Step0Component; 
+  @ViewChild('step0Ref') step0Ref?: Step0Component;
   @ViewChild('step1Ref') step1Ref?: Step1Component;
 
   prev() { this.currentIndex = Math.max(0, this.currentIndex - 1); }

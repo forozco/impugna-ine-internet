@@ -46,6 +46,9 @@ export class StepperComponent implements AfterViewInit, OnChanges {
   isCurrent(i: number) {
     return i === this.currentIndex;
   }
+  isDisabled(i: number) {
+    return i > this.currentIndex;
+  }
 
   ngAfterViewInit(): void {
     this.initTooltips();
