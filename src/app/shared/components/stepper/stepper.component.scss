@@ -4,18 +4,28 @@
   --step-current: #582E73;
   --step-muted:  #e2e2e7;
   --step-disabled: #d6d6d6;
-  --black-000000: #000000;
 }
 
-.stepper { padding: 28px 10px 46px; }
+.stepper {
+  padding: 28px 16px 46px; /* Aumentar padding lateral para mejor alineación */
+}
 
 /* Rail */
 .rail {
-  position: absolute; left: 40px; right: 40px; top: 44px;
-  height: 3px; border-radius: 999px; background: var(--step-muted);
+  position: absolute;
+  left: 50px;
+  right: 50px;
+  top: 43px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--step-muted);
+
   &.rail--progress {
     background: var(--step-purple);
-    width: 0%; z-index: 1;
+    width: 0px; /* Controlado por JavaScript con valores exactos en píxeles */
+    right: auto; /* Permitir que width controle el tamaño */
+    z-index: 1;
+    transition: width 0.3s ease-in-out;
   }
 }
 
@@ -35,11 +45,14 @@
   .check { position: absolute; font-size: 12px; color: #fff; opacity: 0; }
 }
 .step .caption {
-  /* Especificaciones CSS exactas proporcionadas */
-  color: var(--black-000000, #000000);
-  text-align: center;
-  font: normal normal normal 16px/21px Roboto;
+  /* Especificaciones de Adobe XD */
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 16px; /* 16pt = 16px en este contexto */
+  line-height: 21px;
   letter-spacing: 0px;
+  color: #000000;
+  text-align: center;
   opacity: 1;
   margin-top: 8px;
 }
@@ -67,21 +80,26 @@
   .inner { background: var(--step-disabled); }
 }
 .step.step--disabled .caption {
-  /* Mismo formato CSS pero con color deshabilitado */
+  /* Mantener especificaciones de Adobe XD pero con color deshabilitado */
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: 0px;
   color: var(--step-disabled);
   text-align: center;
-  font: normal normal normal 16px/21px Roboto;
-  letter-spacing: 0px;
   opacity: 0.6; /* Reducir opacidad para estado deshabilitado */
 }
 
 /* Responsivo */
 @media (max-width: 640px) {
   .step .caption {
-    font: normal normal normal 14px/18px Roboto; /* Mantener formato pero reducir tamaño */
+    font-size: 14px; /* Reducir un poco pero mantener proporciones */
+    line-height: 18px;
   }
 
   .step.step--disabled .caption {
-    font: normal normal normal 14px/18px Roboto;
+    font-size: 14px;
+    line-height: 18px;
   }
 }

@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -35,11 +36,24 @@ export class StepperComponent implements AfterViewInit, OnChanges {
 
   private tooltipInstances: Tooltip[] = [];
   private host = inject(ElementRef<HTMLElement>);
+  private cdr = inject(ChangeDetectorRef);
+  private stepPositions: number[] = [];
 
-  get progressPercent(): number {
-    const n = this.steps.length;
-    return n <= 1 ? 0 : (this.currentIndex / (n - 1)) * 100;
+  get progressWidthPx(): number {
+    if (this.currentIndex < 0 || this.stepPositions.length === 0) {
+      console.log('No progress - currentIndex:', this.currentIndex, 'positions:', this.stepPositions.length);
+      return 0;
+    }
+
+    // Si estamos en el primer paso, no hay línea
+    if (this.currentIndex === 0) return 0;
+
+    // La línea debe ir desde el primer paso hasta el paso actual
+    const width = this.stepPositions[this.currentIndex] || 0;
+    console.log('Progress width for step', this.currentIndex + 1, ':', width + 'px');
+    return width;
   }
+
   isDone(i: number) {
     return i < this.currentIndex;
   }
@@ -52,18 +66,49 @@ export class StepperComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.initTooltips();
-    this.dotEls.forEach((ref) => {
-      new Tooltip(ref.nativeElement, {
-        container: 'body',
-        placement: 'bottom',
-      });
-    });
-  }
-  ngOnChanges(): void {
-    this.initTooltips();
+    // Calcular las posiciones fijas después de que se renderice la vista
+    setTimeout(() => this.calculateStepPositions(), 100);
   }
 
-  private initTooltips() {
+  ngOnChanges(): void {
+    // Cuando cambia currentIndex, forzar actualización visual
+    console.log('currentIndex changed to:', this.currentIndex);
+    this.cdr.detectChanges();
+
+    // Recalcular las posiciones si es necesario
+    if (this.dotEls && this.dotEls.length > 0 && this.stepPositions.length === 0) {
+      setTimeout(() => this.calculateStepPositions(), 10);
+    }
+  }
+
+  private calculateStepPositions(): void {
+    if (!this.dotEls || this.dotEls.length === 0) return;
+
+    const firstDot = this.dotEls.get(0);
+    if (!firstDot) return;
+
+    const firstDotRect = firstDot.nativeElement.getBoundingClientRect();
+    const firstDotCenter = firstDotRect.left + (firstDotRect.width / 2);
+
+    // Calcular la posición en píxeles para cada paso
+    this.stepPositions = [];
+    this.dotEls.forEach((dotRef, index) => {
+      const dotRect = dotRef.nativeElement.getBoundingClientRect();
+      const dotCenter = dotRect.left + (dotRect.width / 2);
+      const distance = dotCenter - firstDotCenter;
+
+      // Agregar un pequeño ajuste para llegar exactamente al centro
+      const adjustedDistance = distance + 24; // 24px más para llegar al centro exacto
+      this.stepPositions[index] = Math.max(0, adjustedDistance);
+    });
+
+    console.log('Posiciones calculadas:', this.stepPositions);
+
+    // Forzar actualización después de calcular posiciones
+    this.cdr.detectChanges();
+  }
+
+  private initTooltips(): void {
     // Destruir instancias anteriores
     this.tooltipInstances.forEach((t) => t.dispose());
     this.tooltipInstances = [];
