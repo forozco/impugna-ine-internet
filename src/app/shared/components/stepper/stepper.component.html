@@ -1,0 +1,38 @@
+<div
+  class="stepper position-relative"
+  role="progressbar"
+  [attr.aria-valuemin]="1"
+  [attr.aria-valuemax]="steps.length"
+  [attr.aria-valuenow]="currentIndex + 1"
+>
+  <!-- Línea base y progreso -->
+  <div class="rail"></div>
+  <div class="rail rail--progress" [style.width.%]="progressPercent"></div>
+
+  <!-- Pasos -->
+  <ul class="steps">
+    <li
+      class="step text-center"
+      *ngFor="let s of steps; let i = index"
+      [class.step--done]="isDone(i)"
+      [class.step--current]="isCurrent(i)"
+      [attr.aria-current]="isCurrent(i) ? 'step' : null"
+    >
+      <!-- Punto con tooltip Bootstrap -->
+      <div
+        #dotEl
+        class="dot"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        data-bs-custom-class="stepper-tooltip"
+        [attr.title]="s.description ? s.description : 'Paso ' + (i + 1) + ' de ' + steps.length"
+      >
+        <span class="inner"></span>
+        <i class="fa-solid fa-check check" aria-hidden="true"></i>
+      </div>
+
+      <!-- Label debajo -->
+      <div class="caption fw-medium small">{{ s.label }}</div>
+    </li>
+  </ul>
+</div>

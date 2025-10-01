@@ -1,0 +1,52 @@
+<form [formGroup]="form" class="step-card">
+  <!-- Opción requerida -->
+  <div class="mb-3">
+    <label class="form-label">
+      Selecciona la opción que requieras<span class="text-danger">*</span>
+    </label>
+
+    <div class="list-group shadow-sm">
+      <label class="list-group-item d-flex align-items-center gap-2">
+        <input type="radio" class="form-check-input m-0" formControlName="option" value="nuevo" />
+        <div>Registrar nueva impugnación</div>
+      </label>
+
+      <label class="list-group-item d-flex align-items-center gap-2">
+        <input type="radio" class="form-check-input m-0" formControlName="option" value="ampliacion" />
+        <div>Registrar una ampliación de impugnación existente</div>
+      </label>
+    </div>
+
+    <div class="invalid-feedback d-block"
+         *ngIf="form.get('option')?.touched && form.get('option')?.invalid">
+      Selecciona una opción.
+    </div>
+  </div>
+
+  <!-- Folio (solo si es ampliación) -->
+  <div class="mb-3" *ngIf="form.value.option === 'ampliacion'">
+    <label class="form-label">Folio del Medio de Impugnación<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" formControlName="folio"
+           placeholder="Ingresa el folio de registro asociado" />
+    <div class="invalid-feedback d-block"
+         *ngIf="form.get('folio')?.touched && form.get('folio')?.invalid">
+      Ingresa un folio válido.
+    </div>
+  </div>
+
+  <!-- Tipo de impugnación -->
+  <div class="mb-2">
+    <label class="form-label">Tipo de impugnación<span class="text-danger">*</span></label>
+    <select class="form-select" formControlName="tipoImpugnacion">
+      <option value="" disabled>Selecciona</option>
+      <!-- Opciones ejemplo; reemplaza por catálogo real -->
+      <option value="recurso-revision">Recurso de revisión</option>
+      <option value="reconsideracion">Reconsideración</option>
+      <option value="queja">Queja</option>
+    </select>
+    <div class="invalid-feedback d-block"
+         *ngIf="form.get('tipoImpugnacion')?.touched && form.get('tipoImpugnacion')?.invalid">
+      Selecciona un tipo.
+    </div>
+  </div>
+</form>

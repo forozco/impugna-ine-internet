@@ -1,6 +1,73 @@
-@use "assets/estilos/tipografia";
-@use "assets/estilos/colores";
-@use "assets/estilos/espaciado";
+@use 'assets/estilos/tipografia';
+@use 'assets/estilos/colores';
+@use 'assets/estilos/espaciado';
 
 @use "variables" as *;
 @use "mixins" as *;
+
+.stepper-tooltip {
+  --bs-tooltip-bg: #5e2a8a;
+  --bs-tooltip-color: #fff;
+  --bs-tooltip-font-size: 1rem;
+  --bs-tooltip-padding-x: 1rem;
+  --bs-tooltip-padding-y: 0.75rem;
+  --bs-tooltip-max-width: 44rem;
+  --bs-tooltip-border-radius: 0.625rem;
+  --bs-tooltip-opacity: 1;
+  --bs-tooltip-arrow-width: 0.7rem;
+  --bs-tooltip-arrow-height: 0.55rem;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.btn-secondary {
+  --bs-btn-color: #000;
+  --bs-btn-bg: #ffe6f0; /* Fondo rosa claro */
+  --bs-btn-border-color: #ffe6f0;
+  --bs-btn-hover-bg: #ffccd9; /* Hover más intenso */
+  --bs-btn-hover-border-color: #ffccd9;
+  --bs-btn-active-bg: #ffb3c9;
+  --bs-btn-active-border-color: #ffb3c9;
+  font-weight: 600;
+}
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #e6007e; /* Magenta */
+  --bs-btn-border-color: #e6007e;
+  --bs-btn-hover-bg: #cc006e; /* Hover más oscuro */
+  --bs-btn-hover-border-color: #cc006e;
+  --bs-btn-active-bg: #b3005e;
+  --bs-btn-active-border-color: #b3005e;
+  font-weight: 600;
+}
+
+/* Radios en list-group */
+.list-group-item {
+  border: none; /* Quita bordes extra */
+  padding: 0.75rem 1rem;
+  background-color: #ebeaea;
+}
+
+/* Radio customizado */
+.form-check-input[type='radio'] {
+  --bs-form-check-bg: #fff;
+  --bs-form-check-border-color: #aaa;
+  --bs-form-check-checked-bg-image: none;
+  border: 2px solid #d6d3d3;
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+
+/* Color checked */
+.form-check-input:checked[type='radio'] {
+  background-color: #fff;
+  border-color: #e6007e; /* Magenta */
+  box-shadow: inset 0 0 0 4px #e6007e;
+}
+
+/* Hover */
+.form-check-input:hover {
+  border-color: #e6007e;
+}
