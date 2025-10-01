@@ -13,6 +13,8 @@ import { Step1Component } from '../steps/step1/step1.component';
   styleUrl: './impugnacion-wizard.component.scss'
 })
 export class ImpugnacionWizardComponent {
+  @ViewChild(StepperComponent) stepper!: StepperComponent;
+
   steps: StepItem[] = [
     { label: 'Paso 1', description: 'Información general' },
     { label: 'Paso 2', description: 'Datos del impugnante' },
@@ -73,13 +75,42 @@ export class ImpugnacionWizardComponent {
     // TODO: Llama API / router, etc.
   }
 
-  /** Calcula la posición de la flecha basada en el paso actual */
+  /** Calcula la posición de la flecha basada en el centro del círculo del paso actual */
   getArrowPosition(): number {
-    const totalSteps = this.steps.length;
-    if (totalSteps === 0) return 50; // Fallback al centro
+    // Usar las posiciones absolutas reales
+    if (this.stepper && this.stepper['dotEls']) {
+      try {
+        const dotEls = this.stepper['dotEls'];
+        const currentDot = dotEls.get(this.currentIndex);
 
-    // El stepper tiene padding de 40px a cada lado (según el CSS del stepper)
-    // Calculamos la posición considerando que los pasos están distribuidos uniformemente
+        if (currentDot) {
+          // Obtener las posiciones absolutas de los elementos
+          const dotRect = currentDot.nativeElement.getBoundingClientRect();
+          const stepperContainer = document.querySelector('.stepper-container');
+
+          if (stepperContainer) {
+            const containerRect = stepperContainer.getBoundingClientRect();
+
+            // Calcular el centro del círculo relativo al contenedor de la flecha
+            const dotCenter = dotRect.left + (dotRect.width / 2);
+            const containerLeft = containerRect.left;
+            const containerWidth = containerRect.width;
+
+            // Posición relativa en porcentaje
+            const relativePosition = ((dotCenter - containerLeft) / containerWidth) * 100;
+
+            return Math.min(Math.max(relativePosition, 0), 100);
+          }
+        }
+      } catch (error) {
+        console.log('Error calculando posición de flecha:', error);
+      }
+    }
+
+    // Fallback al cálculo original si no hay posiciones disponibles
+    const totalSteps = this.steps.length;
+    if (totalSteps === 0) return 50;
+
     const stepWidth = 100 / totalSteps;
     const stepCenter = stepWidth / 2;
     const position = (this.currentIndex * stepWidth) + stepCenter;

@@ -39,9 +39,19 @@ export class StepperComponent implements AfterViewInit, OnChanges {
   private cdr = inject(ChangeDetectorRef);
   private stepPositions: number[] = [];
 
+  /** Método público para obtener la posición del círculo de un paso específico */
+  getStepPositionPx(stepIndex: number): number {
+    if (stepIndex < 0 || stepIndex >= this.stepPositions.length) return 0;
+    return this.stepPositions[stepIndex] || 0;
+  }
+
+  /** Método público para obtener el ancho total del stepper */
+  getStepperWidth(): number {
+    return this.host.nativeElement.getBoundingClientRect().width;
+  }
+
   get progressWidthPx(): number {
     if (this.currentIndex < 0 || this.stepPositions.length === 0) {
-      console.log('No progress - currentIndex:', this.currentIndex, 'positions:', this.stepPositions.length);
       return 0;
     }
 
@@ -50,11 +60,8 @@ export class StepperComponent implements AfterViewInit, OnChanges {
 
     // La línea debe ir desde el primer paso hasta el paso actual
     const width = this.stepPositions[this.currentIndex] || 0;
-    console.log('Progress width for step', this.currentIndex + 1, ':', width + 'px');
     return width;
-  }
-
-  isDone(i: number) {
+  }  isDone(i: number) {
     return i < this.currentIndex;
   }
   isCurrent(i: number) {
@@ -72,7 +79,6 @@ export class StepperComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(): void {
     // Cuando cambia currentIndex, forzar actualización visual
-    console.log('currentIndex changed to:', this.currentIndex);
     this.cdr.detectChanges();
 
     // Recalcular las posiciones si es necesario
@@ -98,11 +104,9 @@ export class StepperComponent implements AfterViewInit, OnChanges {
       const distance = dotCenter - firstDotCenter;
 
       // Agregar un pequeño ajuste para llegar exactamente al centro
-      const adjustedDistance = distance + 24; // 24px más para llegar al centro exacto
+      const adjustedDistance = distance + 30; // 30px más para llegar al centro exacto
       this.stepPositions[index] = Math.max(0, adjustedDistance);
     });
-
-    console.log('Posiciones calculadas:', this.stepPositions);
 
     // Forzar actualización después de calcular posiciones
     this.cdr.detectChanges();
