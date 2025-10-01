@@ -4,6 +4,7 @@
   --step-current: #582E73;
   --step-muted:  #e2e2e7;
   --step-disabled: #d6d6d6;
+  --black-000000: #000000;
 }
 
 .stepper { padding: 28px 10px 46px; }
@@ -11,7 +12,7 @@
 /* Rail */
 .rail {
   position: absolute; left: 40px; right: 40px; top: 44px;
-  height: 6px; border-radius: 999px; background: var(--step-muted);
+  height: 3px; border-radius: 999px; background: var(--step-muted);
   &.rail--progress {
     background: var(--step-purple);
     width: 0%; z-index: 1;
@@ -33,7 +34,15 @@
   .inner { width: 10px; height: 10px; border-radius: 999px; background: var(--step-muted); }
   .check { position: absolute; font-size: 12px; color: #fff; opacity: 0; }
 }
-.step .caption { color: #000; margin-top: 8px; }
+.step .caption {
+  /* Especificaciones CSS exactas proporcionadas */
+  color: var(--black-000000, #000000);
+  text-align: center;
+  font: normal normal normal 16px/21px Roboto;
+  letter-spacing: 0px;
+  opacity: 1;
+  margin-top: 8px;
+}
 
 .step.step--done .dot {
   border-color: var(--step-done); background: var(--step-done);
@@ -58,10 +67,21 @@
   .inner { background: var(--step-disabled); }
 }
 .step.step--disabled .caption {
+  /* Mismo formato CSS pero con color deshabilitado */
   color: var(--step-disabled);
+  text-align: center;
+  font: normal normal normal 16px/21px Roboto;
+  letter-spacing: 0px;
+  opacity: 0.6; /* Reducir opacidad para estado deshabilitado */
 }
 
 /* Responsivo */
 @media (max-width: 640px) {
-  .step .caption { font-size: 11px; }
+  .step .caption {
+    font: normal normal normal 14px/18px Roboto; /* Mantener formato pero reducir tamaño */
+  }
+
+  .step.step--disabled .caption {
+    font: normal normal normal 14px/18px Roboto;
+  }
 }
