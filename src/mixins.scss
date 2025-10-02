@@ -1,4 +1,5 @@
 @use "./variables" as vars;
+@use "sass:map";
 
 //== FUENTES
 @mixin base-fonts(
@@ -182,19 +183,19 @@ $buttons: (
 @each $name, $props in $buttons {
     .#{$name} {
         @include button(
-            map-get($props, variant),
-            map-get($props, radius),
-            map-get($props, font),
-            map-get($props, bgcolor),
-            map-get($props, textcolor),
-            map-get($props, bordercolor),
-            map-get($props, bgcolorhover),
-            map-get($props, textcolorhover),
-            map-get($props, bordercolorhover),
-            map-get($props, bgcolordisabled),
-            map-get($props, textcolordisabled),
-            map-get($props, bordercolordisabled),
-            map-get($props, width)
+            map.get($props, variant),
+            map.get($props, radius),
+            map.get($props, font),
+            map.get($props, bgcolor),
+            map.get($props, textcolor),
+            map.get($props, bordercolor),
+            map.get($props, bgcolorhover),
+            map.get($props, textcolorhover),
+            map.get($props, bordercolorhover),
+            map.get($props, bgcolordisabled),
+            map.get($props, textcolordisabled),
+            map.get($props, bordercolordisabled),
+            map.get($props, width)
         );
     }
 }
