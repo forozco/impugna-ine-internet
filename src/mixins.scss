@@ -1,0 +1,200 @@
+@use "./variables" as vars;
+
+//== FUENTES
+@mixin base-fonts(
+    $weight,
+    $size,
+    $line-height,
+    $letter-spacing: vars.$letter-spacing-0
+) {
+    font-weight: $weight;
+    font-size: $size;
+    line-height: $line-height;
+    letter-spacing: $letter-spacing;
+}
+
+@mixin title-font {
+    @include base-fonts(
+        vars.$font-weight-bold,
+        vars.$font-size-18,
+        vars.$line-height-18
+    );
+}
+
+@mixin text-font {
+    @include base-fonts(
+        vars.$font-weight-regular,
+        vars.$font-size-16,
+        vars.$line-height-16
+    );
+}
+
+@mixin apply-font-mixin($mixin-name) {
+    @if $mixin-name == "title-font" {
+        @include title-font;
+    }
+     @else if $mixin-name == "text-font" {
+        @include text-font;
+    }
+}
+
+$fonts: (
+    "title-font": title-font,
+    "text-font": text-font
+);
+
+@each $name, $mixin in $fonts {
+    .#{$name} {
+        @include apply-font-mixin($mixin);
+    }
+}
+
+
+//== COLORES Y BACKGROUNDS
+$colors: (
+    "color-negro": vars.$color-negro,
+    "color-blanco":vars.$color-blanco, 
+    "color-rosa-INE":vars.$color-rosa-INE, 
+    "color-morado-INE":vars.$color-morado-INE,
+    "color-rosa-INE-1":vars.$color-rosa-INE-1
+);
+
+@each $name, $value in $colors {
+    .#{$name} {
+        color: $value !important;
+    }
+
+    .#{$name}-bg {
+        background-color: $value !important;
+    }
+}
+
+//== BOTONES
+
+// Mixin general de botón actualizado
+@mixin button(
+    $variant,
+    $radius,
+    $font-mixin,
+    $bgcolor: null,
+    $textcolor: null,
+    $bordercolor: null,
+    $bgcolorhover: null,
+    $textcolorhover: null,
+    $bordercolorhover: null,
+    $bgcolordisabled: null,
+    $textcolordisabled: null,
+    $bordercolordisabled: null,
+    $width: auto
+) {
+    
+    @include apply-font-mixin($font-mixin);
+
+    padding: 12px 32px;
+    border-radius: $radius;
+    width: $width;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    // Estado normal
+    background: $bgcolor;
+    color: $textcolor;
+    border: 2px solid $bordercolor;
+
+    // Estado hover
+    #{&}:hover {
+        @if $bgcolorhover {
+            background: $bgcolorhover;
+        }
+
+        @if $textcolorhover {
+            color: $textcolorhover;
+        }
+
+        @if $bordercolorhover {
+            border-color: $bordercolorhover;
+        }
+    }
+
+    // Estado disabled
+    #{&}:disabled {
+        cursor: not-allowed;
+
+        @if $bgcolordisabled {
+            background: $bgcolordisabled;
+        }
+
+        @if $textcolordisabled {
+            color: $textcolordisabled;
+        }
+
+        @if $bordercolordisabled {
+            border-color: $bordercolordisabled;
+        }
+    }
+
+    // Estilos específicos por variante
+    @if $variant == solid {
+        border: none;
+    }
+}
+
+$buttons: (
+    "boton-radius-rosa":
+        (
+            variant: solid,
+            radius: 20px,
+            font: text-font,
+            bgcolor: vars.$color-rosa-INE,
+            textcolor: vars.$color-blanco,
+            bordercolor: vars.$color-rosa-INE,
+            bgcolorhover: vars.$color-rosa-INE,
+            textcolorhover: vars.$color-blanco,
+            bordercolorhover: vars.$color-rosa-INE,
+            bgcolordisabled: vars.$color-rosa-INE-1,
+            textcolordisabled: vars.$color-negro,
+            bordercolordisabled: vars.$color-rosa-INE-1,
+            width: auto,
+        ),
+    "boton-radius-outline-rosa":
+        (
+            variant: outline,
+            radius: 20px,
+            font: text-font,
+            bgcolor: transparent,
+            textcolor: vars.$color-rosa-INE,
+            bordercolor: vars.$color-rosa-INE,
+            bgcolorhover: vars.$color-rosa-INE,
+            textcolorhover: vars.$color-blanco,
+            bordercolorhover: vars.$color-rosa-INE,
+            bgcolordisabled: vars.$color-rosa-INE-1,
+            textcolordisabled: vars.$color-negro,
+            bordercolordisabled: vars.$color-rosa-INE,
+            width: auto,
+        ),
+);
+
+// Generador de clases dinámicas
+@each $name, $props in $buttons {
+    .#{$name} {
+        @include button(
+            map-get($props, variant),
+            map-get($props, radius),
+            map-get($props, font),
+            map-get($props, bgcolor),
+            map-get($props, textcolor),
+            map-get($props, bordercolor),
+            map-get($props, bgcolorhover),
+            map-get($props, textcolorhover),
+            map-get($props, bordercolorhover),
+            map-get($props, bgcolordisabled),
+            map-get($props, textcolordisabled),
+            map-get($props, bordercolordisabled),
+            map-get($props, width)
+        );
+    }
+}

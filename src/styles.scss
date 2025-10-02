@@ -2,6 +2,9 @@
 @use 'assets/estilos/colores';
 @use 'assets/estilos/espaciado';
 
+@use "variables" as *;
+@use "mixins" as *;
+
 .stepper-tooltip {
   --bs-tooltip-bg: #5e2a8a;
   --bs-tooltip-color: #fff;
