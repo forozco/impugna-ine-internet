@@ -17,22 +17,26 @@
       </label>
     </div>
 
-    <div class="invalid-feedback d-block"
-         *ngIf="form.get('option')?.touched && form.get('option')?.invalid">
-      Selecciona una opción.
-    </div>
+    @if (form.get('option')?.touched && form.get('option')?.invalid) {
+      <div class="invalid-feedback d-block">
+        Selecciona una opción.
+      </div>
+    }
   </div>
 
   <!-- Folio (solo si es ampliación) -->
-  <div class="mb-3" *ngIf="form.value.option === 'ampliacion'">
-    <label class="form-label">Folio del Medio de Impugnación<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" formControlName="folio"
-           placeholder="Ingresa el folio de registro asociado" />
-    <div class="invalid-feedback d-block"
-         *ngIf="form.get('folio')?.touched && form.get('folio')?.invalid">
-      Ingresa un folio válido.
+  @if (form.value.option === 'ampliacion') {
+    <div class="mb-3">
+      <label class="form-label">Folio del Medio de Impugnación<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" formControlName="folio"
+             placeholder="Ingresa el folio de registro asociado" />
+      @if (form.get('folio')?.touched && form.get('folio')?.invalid) {
+        <div class="invalid-feedback d-block">
+          Ingresa un folio válido.
+        </div>
+      }
     </div>
-  </div>
+  }
 
   <!-- Tipo de impugnación -->
   <div class="mb-2">
@@ -44,9 +48,10 @@
       <option value="reconsideracion">Reconsideración</option>
       <option value="queja">Queja</option>
     </select>
-    <div class="invalid-feedback d-block"
-         *ngIf="form.get('tipoImpugnacion')?.touched && form.get('tipoImpugnacion')?.invalid">
-      Selecciona un tipo.
-    </div>
+    @if (form.get('tipoImpugnacion')?.touched && form.get('tipoImpugnacion')?.invalid) {
+      <div class="invalid-feedback d-block">
+        Selecciona un tipo.
+      </div>
+    }
   </div>
 </form>

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StepperComponent, StepItem } from '../../../shared/components/stepper/stepper.component';
 import { ImpugnacionData } from '../../../shared/models/impugnacion.models';
@@ -12,7 +12,7 @@ import { Step1Component } from '../steps/step1/step1.component';
   templateUrl: './impugnacion-wizard.component.html',
   styleUrl: './impugnacion-wizard.component.scss'
 })
-export class ImpugnacionWizardComponent {
+export class ImpugnacionWizardComponent implements AfterViewInit {
   @ViewChild(StepperComponent) stepper!: StepperComponent;
 
   steps: StepItem[] = [
@@ -29,13 +29,36 @@ export class ImpugnacionWizardComponent {
   /** Control total del índice (configurado en paso 5 = índice 4) */
   currentIndex = 4;
 
+  /** Posición de la flecha en porcentaje */
+  arrowPosition = 50;
+
   /** Estado global de todos los pasos */
   data: ImpugnacionData = {};
 
   @ViewChild('step0Ref') step0Ref?: Step0Component;
   @ViewChild('step1Ref') step1Ref?: Step1Component;
 
-  prev() { this.currentIndex = Math.max(0, this.currentIndex - 1); }
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngAfterViewInit() {
+    // Calcular la posición inicial después de que la vista se haya inicializado
+    setTimeout(() => {
+      this.updateArrowPosition();
+    });
+  }
+
+  /** Actualiza la posición de la flecha de manera segura */
+  updateArrowPosition() {
+    setTimeout(() => {
+      this.arrowPosition = this.calculateArrowPosition();
+      this.cdr.detectChanges();
+    });
+  }
+
+  prev() { 
+    this.currentIndex = Math.max(0, this.currentIndex - 1); 
+    this.updateArrowPosition();
+  }
 
   next() {
     // Valida y guarda el paso actual
@@ -44,6 +67,7 @@ export class ImpugnacionWizardComponent {
     const last = this.currentIndex === this.steps.length - 1;
     if (!last) {
       this.currentIndex = Math.min(this.steps.length - 1, this.currentIndex + 1);
+      this.updateArrowPosition();
     } else {
       this.submitAll();
     }
@@ -76,7 +100,7 @@ export class ImpugnacionWizardComponent {
   }
 
   /** Calcula la posición de la flecha basada en el centro del círculo del paso actual */
-  getArrowPosition(): number {
+  calculateArrowPosition(): number {
     // Usar las posiciones absolutas reales
     if (this.stepper && this.stepper['dotEls']) {
       try {

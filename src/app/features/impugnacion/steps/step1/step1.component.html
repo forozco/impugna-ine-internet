@@ -16,21 +16,24 @@
       </label>
     </div>
 
-    <div class="invalid-feedback d-block"
-         *ngIf="form.get('registrantType')?.touched && form.get('registrantType')?.invalid">
-      Selecciona una opción.
-    </div>
+    @if (form.get('registrantType')?.touched && form.get('registrantType')?.invalid) {
+      <div class="invalid-feedback d-block">
+        Selecciona una opción.
+      </div>
+    }
   </div>
 
   <!-- Representantes dinámicos -->
-  <ng-container *ngIf="form.value.registrantType === 'representantes'">
+  @if (form.value.registrantType === 'representantes') {
     <label class="form-label fw-semibold">Representantes</label>
     <div class="d-flex flex-column gap-2 mb-2">
-      <div class="input-group" *ngFor="let ctrl of reps.controls; index as i">
-        <input class="form-control" [formControl]="ctrl" placeholder="Representante {{ i + 1 }}" />
-        <button class="btn btn-outline-secondary" type="button" (click)="removeRep(i)" [disabled]="reps.length<=1">&minus;</button>
-      </div>
+      @for (ctrl of reps.controls; track $index) {
+        <div class="input-group">
+          <input class="form-control" [formControl]="ctrl" placeholder="Representante {{ $index + 1 }}" />
+          <button class="btn btn-outline-secondary" type="button" (click)="removeRep($index)" [disabled]="reps.length<=1">&minus;</button>
+        </div>
+      }
       <button class="btn btn-outline-primary align-self-start" type="button" (click)="addRep()">+</button>
     </div>
-  </ng-container>
+  }
 </form>
